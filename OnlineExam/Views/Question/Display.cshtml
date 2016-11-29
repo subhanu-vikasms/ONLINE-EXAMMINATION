@@ -1,0 +1,77 @@
+﻿@model IEnumerable<OnlineExam.Models.Question>
+@{
+    ViewBag.Title = "Display";
+   
+}
+<script src="@Url.Content("~/Scripts/jquery-3.1.1.js")"></script>
+<div id="mydiv" data-model="@Json.Encode(@Model)"></div>
+<html>
+<body>
+    <form name="form1">
+        <div>
+            <div>
+                <section id="wrap">
+                    <div style="color:firebrick; margin-top:30px;padding:2% 0 2% 2%; border:2px solid green;background-color:lightgoldenrodyellow">
+                       <label>Q.No:&nbsp;</label><div id="QNo" style="display:inline"></div>
+                        <div id="Quest" style="display:block"></div>
+                        @Html.RadioButton("rbd1", "", false, new { @id = "rbd5" })<label id="Opt1"></label><br />
+                        @Html.RadioButton("rbd1", "", false, new { @id = "rbd2" })<label id="Opt2"></label><br />
+                        @Html.RadioButton("rbd1", "", false, new { @id = "rbd3" })<label id="Opt3"></label><br />
+                        @Html.RadioButton("rbd1", "", false, new { @id = "rbd4" })<label id="Opt4"></label><br />
+                        <input type="button" id="next" value="Next" tabindex="0" />
+                        @Html.Hidden("rdbval",new { @id = "rdbvalue" })
+                    </div>
+                </section>
+            </div>
+            
+        </div>
+    </form>
+    <script>
+        $(document).ready(function () {
+            var model = $("#mydiv").attr("data-model");
+            var arr;
+            var random;
+            var elements;
+            $("#next").click(function () {
+                arr = $.map(JSON.parse(model), function (el) { return el });
+                random = arr[Math.floor(Math.random() * arr.length)];
+                console.log(elements);
+                document.getElementById("QNo").innerHTML = random.QId;
+                document.getElementById("Quest").innerHTML = random.Quest;
+                $("#rbd5").val(random.Option1);
+                $("#rbd2").val(random.Option2);
+                $("#rbd3").val(random.Option3);
+                $("#rbd4").val(random.Option4);
+
+                document.getElementById("Opt1").innerHTML = random.Option1;
+                document.getElementById("Opt2").innerHTML = random.Option2;
+                document.getElementById("Opt3").innerHTML = random.Option3;
+                document.getElementById("Opt4").innerHTML = random.Option4;
+                var selected = $('input[name=rbd1]:checked').val();
+                console.log(selected);
+                $("#rdbvalue", selected);
+
+            });
+        });
+    </script>
+</body>
+@Html.Partial("_PartialPage")
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
